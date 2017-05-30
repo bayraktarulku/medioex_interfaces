@@ -52,8 +52,3 @@ class MedIOExInterface(zigbee_interface.ZigbeeService):
         ai_values = [hex(ai_values[1])[2:].zfill(3)
                      for i in range(4)]
         return di_values + str.join('', ai_values)
-
-if __name__ == '__main__':
-    serial_port = Serial('/dev/ttyUSB0', 9600)
-    m = MedIOExInterface(serial_port)
-    m.run()
