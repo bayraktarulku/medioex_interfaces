@@ -42,7 +42,7 @@ class MedIOExInterface(zigbee_interface.ZigbeeService):
         di_values = []
         for i in range(16, 0, -1):
             r = requests.get(API_BASE_URL + '/di', params={'pin': i})
-            di_values.append(r.json()['value'])
+            di_values.append(str(r.json()['value']))
         di_values = hex(int(''.join(di_values), 2))[2:].zfill(4)
 
         ai_values = []
