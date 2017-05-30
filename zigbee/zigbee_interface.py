@@ -1,9 +1,9 @@
 from pprint import pprint
 from time import sleep
+from config import ME
 import re
 
 
-ME = '3'
 DATA_PATTERN = re.compile('([0-9A-Fa-f]{1,3})\|([CR])\|([0-9,;]+)\|(.*)')
 
 

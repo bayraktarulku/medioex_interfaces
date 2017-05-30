@@ -1,10 +1,9 @@
 from serial import Serial
 import requests
 import zigbee_interface
+from config import API_BASE_URL
 from time import sleep
 import json
-
-API_BASE_URL = 'http://127.0.0.1:5000/api'
 
 
 class MedIOExInterface(zigbee_interface.ZigbeeService):
