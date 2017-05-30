@@ -16,7 +16,7 @@ git clone https://github.com/nejdetckenobi/pymedioex
 
 cd pymedioex
 python3 setup.py install
-cd ../medioex_test_suite
+cd ../web
 pip3 install -r requirements.txt
 cd ..
 # Cleaning up
