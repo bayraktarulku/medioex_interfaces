@@ -69,7 +69,8 @@ Let's take `XXXX` as `FF0A`
 ```
 
 Here you can see the the status of every single digital input and relay.
-The other `ABCDEFGHIJKL` part is the hex values of the analog inputs, 3 character for each input.
+
+The other `ABCDEFGHIJKL` part is the hex values of the analog inputs, 3 characters for each input.
 
 
 ### Examples
@@ -77,18 +78,30 @@ The other `ABCDEFGHIJKL` part is the hex values of the analog inputs, 3 characte
 Here are the examples for this format:
 
 > `3|C|1;2,3,4,5|R01,DF0,A3FFF`
+
   I am `1`. Sender of this data.
+
   This data contains commands.
+
   The first command is `R01` means "Write 1 to relay output 0".
+
   The second command is `DF0` means "Write 1 to digital output 15".
+
   The third command is `A3FFF` means "Write 4095 to analog output 3"
 
 
 > `ID|R|5;4,3,2,1|FF0AFFEEDDCCBBAA`
+
   I am `5`. Sender of this data.
+
   This data contains a reply for your command list that you've sent before.
+
   All digital inputs and relays are in FF0A. (Switch to binary like the example in response section)
+
   First Analog Input is FFE (4094)
+
   Second Analog Input is EDD (3805)
+
   Third Analog Input is CCB (3275)
+
   Fourth Analog Input is BAA (2986)
