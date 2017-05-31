@@ -29,7 +29,7 @@ cd medioex_interfaces/web
 sudo python3 run.py
 ```
 
-## How to use
+### How to use
 
 The interface contains 6 endpoints
 
