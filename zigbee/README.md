@@ -69,7 +69,8 @@ Let's take `XXXX` as `FF0A`
 ```
 
 Here you can see the the status of every single digital input and relay.
-The other `ABCDEFGHIJKL` part is the hex values of the analog inputs, 3 character for each input.
+
+The other `ABCDEFGHIJKL` part is the hex values of the analog inputs, 3 characters for each input.
 
 
 ### Examples
