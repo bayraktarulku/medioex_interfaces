@@ -133,11 +133,11 @@ class ZigbeeService(object):
             # Data is for me
             if len(data['next_path']) == 1:
                 response = self.process_data(data)
-
             # Data is not for me, but it should pass from me
             else:
                 response = self.bounce_data(data)
-            self.send(response)
+            raw_response = self.generate_raw_data(response)
+            self.send(raw_response)
 
     def halt(self):
         self.running = False
