@@ -2,7 +2,7 @@ from pprint import pprint
 from time import time
 from models import Data, DBSession
 from config import ME, TIMEOUT_THRESHOLD
-from sqlalchemy import and_
+from sqlalchemy import and_,
 import re
 
 
@@ -74,9 +74,14 @@ class ZigbeeService(object):
 
     def is_unique(self, data):
         session = DBSession()
-        ref_check = session.query(Data).filter(
-            and_(Data.msg_id == data['msg_id'],
-                 Data.dtype == data['dtype'])).count()
+        if data['dtype'] == 'C':
+            ref_check = session.query(Data).filter(
+                and_(Data.msg_id == data['msg_id'],
+                     Data.dtype == 'C')).count()
+        elif data['dtype'] in ('N', 'R'):
+            ref_check = session.query(Data).filter(
+                Data.msg_id == data['msg_id']).count()
+
         return ref_check == 0
 
     def save_data(self, data):
