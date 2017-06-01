@@ -1,8 +1,6 @@
-from serial import Serial
 import requests
 import zigbee_interface
 from config import API_BASE_URL
-import json
 
 
 class MedIOExInterface(zigbee_interface.ZigbeeService):
