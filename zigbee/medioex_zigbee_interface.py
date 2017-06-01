@@ -1,7 +1,6 @@
 import requests
 import zigbee_interface
 from config import API_BASE_URL
-import json
 
 
 
