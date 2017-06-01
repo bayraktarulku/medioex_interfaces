@@ -2,7 +2,6 @@ from serial import Serial
 import requests
 import zigbee_interface
 from config import API_BASE_URL
-from time import sleep
 import json
 
 
@@ -36,7 +35,6 @@ class MedIOExInterface(zigbee_interface.ZigbeeService):
                 continue
             elif c[0] == 'I':
                 continue
-            sleep(0.1)
 
         di_values = []
         for i in range(16, 0, -1):
