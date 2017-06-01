@@ -136,7 +136,7 @@ class ZigbeeService(object):
             # Data is not for me, but it should pass from me
             else:
                 response = self.bounce_data(data)
-            raw_response = self.generate_raw_data(response)
+            raw_response = self.generate_raw_data(**response)
             self.send(raw_response)
 
     def halt(self):
