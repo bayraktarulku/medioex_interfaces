@@ -45,12 +45,12 @@ class ZigbeeService(object):
     def generate_raw_data(msg_id, prev_path, next_path, dtype, message):
         prev_path = ','.join(prev_path)
         next_path = ','.join(next_path)
-        return '{};{}|{}|{}\n'.format(prev_path, next_path, dtype, message)
+        return '{};{}|{}|{}'.format(prev_path, next_path, dtype, message)
 
     def send(self, data):
         sleep(0.5)
         if not isinstance(data, bytes):
-            data = data.encode()
+            data = (data + '\n').encode()
         return self.port.write(data)
 
     def recv(self):
@@ -112,51 +112,28 @@ class ZigbeeService(object):
                 print('DUPLICATED PACKAGE, SINKING: "{}"'.format(raw_data))
                 continue
 
-            # Got a response data
-            if data['dtype'] == 'R':
-                # Got a response and no more hops
-                if len(data['next_path']) == 1:
-                    # Oh it's for me
-                    if data['next_path'][0] in ME:
-                        print('RESPONSE FROM COMMAND: "{}"'.format(raw_data))
-                        pprint(data)
-                        continue
-                    # It's not for me.
-                    else:
-                        print('SINKING')
-                        self.sink_data()
-                # Got a response and have some hops more.
-                elif data['next_path'][0] in ME:
-                    print('BOUNCING REPLY: "{}"'.format(raw_data))
-                    response = self.bounce_data(data)
-                    raw_response = self.generate_raw_data(**response)
-                    self.send(raw_response)
-            # Got a command and no more hops.
-            elif len(data['next_path']) == 1:
-                # It's for me. Doing my job
-                if data['next_path'][0] in ME:
-                    response = self.process_data(data)
-                    raw_response = self.generate_raw_data(**response)
-                    print('PROCESSING COMMAND: "{}"'.format(raw_data))
-                    print('SENDING REPLY: "{}"'.format(
-                        raw_response.strip('\n')))
-                    self.send(raw_response)
-                # Not for me. I don't care.
-                else:
-                    self.sink_data()
+            # Data is irrelevant
+            if ME not in data['next_path']:
+                print('IRRELEVANT DATA: "{}"'.format(raw_data))
+                print('SINKED.')
+                continue
 
-            # Got a command, I'm on the path.
-            elif ME in data['next_path']:
-                response = self.bounce_data(data)
-                raw_response = self.generate_raw_data(**response)
-                print('BOUNCING: "{}"'.format(raw_response.strip('\n')))
-                self.send(raw_response)
+            # Data should pass from me or data is for me.
+            fasten_flag = False
+            while ME != data['next_path'][0]:
+                fasten_flag = True
+                data = self.bounce_data(data)
+            if fasten_flag:
+                print('FASTER PROCESS!')
 
-            # Got a command, I'm not on the path.
+            # Data is for me
+            if len(data['next_path']) == 1:
+                response = self.process_data(data)
+
+            # Data is not for me, but it should pass from me
             else:
-                print('IRRELEVANT FOR NOW: "{}"'.format(raw_data))
-                print('SINKED')
-                self.sink_data()
+                response = self.bounce_data(data)
+            self.send(response)
 
     def halt(self):
         self.running = False
