@@ -1,5 +1,5 @@
 from pprint import pprint
-from time import sleep, time
+from time import time
 from models import Data, DBSession
 from config import ME, TIMEOUT_THRESHOLD
 from sqlalchemy import and_
@@ -48,7 +48,6 @@ class ZigbeeService(object):
         return '{};{}|{}|{}'.format(prev_path, next_path, dtype, message)
 
     def send(self, data):
-        sleep(0.5)
         if not isinstance(data, bytes):
             data = (data + '\n').encode()
         return self.port.write(data)
