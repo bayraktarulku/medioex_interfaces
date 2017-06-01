@@ -31,10 +31,6 @@ class MedIOExInterface(zigbee_interface.ZigbeeService):
                 val = int(c[2:], 16)
                 requests.get(API_BASE_URL + '/ao',
                              params={'pin': pin, 'val': val})
-            elif c[0] == 'N':
-                continue
-            elif c[0] == 'I':
-                continue
 
         di_values = []
         for i in range(16, 0, -1):

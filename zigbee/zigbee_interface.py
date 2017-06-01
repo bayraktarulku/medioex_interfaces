@@ -2,7 +2,7 @@ from pprint import pprint
 from time import time
 from models import Data, DBSession
 from config import ME, TIMEOUT_THRESHOLD
-from sqlalchemy import and_,
+from sqlalchemy import and_
 import re
 
 
