@@ -84,6 +84,10 @@ class ZigbeeService(object):
         session = DBSession()
         temp = data.copy()
         temp['timestamp'] = time()
+        temp['path'] = '{};{}'.format(','.join(temp['prev_path']),
+                                      ','.join(temp['prev_path']))
+        del temp['prev_path']
+        del temp['next_path']
         new_record = Data(**temp)
         session.add(new_record)
         session.commit()
