@@ -3,7 +3,6 @@ import zigbee_interface
 from config import API_BASE_URL
 
 
-
 class MedIOExInterface(zigbee_interface.ZigbeeService):
 
     def __init__(self, *args, **kwargs):
