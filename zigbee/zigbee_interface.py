@@ -20,7 +20,8 @@ class ZigbeeService(object):
     def _cleanup(self):
         now = time()
         session = DBSession()
-        session.query(Data).filter(now - Data.timestamp > TIMEOUT_THRESHOLD).delete()
+        session.query(Data).filter(
+            now - Data.timestamp > TIMEOUT_THRESHOLD).delete()
         session.commit()
         session.close()
 
@@ -137,7 +138,10 @@ class ZigbeeService(object):
             # Data is for me
             if len(data['next_path']) == 1:
                 response = self.process_data(data)
-
+                # Master expects no reply. So, do not send any.
+                if data['dtype'] == 'N':
+                    print('DO NOT REPLY DETECTED. NOT REPLYING.')
+                    continue
             # Data is not for me, but it should pass from me
             else:
                 response = self.bounce_data(data)
