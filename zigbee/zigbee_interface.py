@@ -137,6 +137,9 @@ class ZigbeeService(object):
 
             # Data is for me
             if len(data['next_path']) == 1:
+                if data['dtype'] == 'R':
+                    print('RESPONSE TO ME: "{}"'.format(raw_data))
+                    continue
                 response = self.process_data(data)
                 # Master expects no reply. So, do not send any.
                 if data['dtype'] == 'N':
