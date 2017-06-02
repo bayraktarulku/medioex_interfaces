@@ -44,7 +44,8 @@ class ZigbeeService(object):
     def generate_raw_data(msg_id, prev_path, next_path, dtype, message):
         prev_path = ','.join(prev_path)
         next_path = ','.join(next_path)
-        return '{};{}|{}|{}'.format(prev_path, next_path, dtype, message)
+        return '{}|{};{}|{}|{}'.format(
+            msg_id, prev_path, next_path, dtype, message)
 
     def send(self, data):
         if not isinstance(data, bytes):
