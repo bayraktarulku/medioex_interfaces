@@ -74,13 +74,13 @@ class ZigbeeService(object):
 
     def is_unique(self, data):
         session = DBSession()
-        if data['dtype'] == 'C':
-            ref_check = session.query(Data).filter(
-                and_(Data.msg_id == data['msg_id'],
-                     Data.dtype == 'C')).count()
-        elif data['dtype'] in ('N', 'R'):
+        if data['dtype'] in ('C', 'N'):
             ref_check = session.query(Data).filter(
                 Data.msg_id == data['msg_id']).count()
+        elif data['dtype'] == 'R':
+            ref_check = session.query(Data).filter(and_(
+                Data.msg_id == data['msg_id'],
+                Data.dtype != 'C')).count()
 
         return ref_check == 0
 
