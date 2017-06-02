@@ -6,7 +6,7 @@ from sqlalchemy import and_
 import re
 
 
-DATA_PATTERN = re.compile('([0-9A-Fa-f]{1,3})\|([CR])\|([0-9,;]+)\|(.*)')
+DATA_PATTERN = re.compile('([0-9A-Fa-f]{1,3})\|([CRN])\|([0-9,;]+)\|(.*)')
 
 
 class ZigbeeService(object):
@@ -28,8 +28,6 @@ class ZigbeeService(object):
     @staticmethod
     def parse_raw_data(data):
         parsed = DATA_PATTERN.match(data)
-        if not parsed:
-            return
         msg_id, dtype, path, message = parsed.groups()
 
         prev_path, next_path = path.split(';')
@@ -46,7 +44,8 @@ class ZigbeeService(object):
     def generate_raw_data(msg_id, prev_path, next_path, dtype, message):
         prev_path = ','.join(prev_path)
         next_path = ','.join(next_path)
-        return '{};{}|{}|{}'.format(prev_path, next_path, dtype, message)
+        return '{}|{}|{};{}|{}'.format(
+            msg_id, dtype, prev_path, next_path, message)
 
     def send(self, data):
         if not isinstance(data, bytes):
@@ -113,6 +112,7 @@ class ZigbeeService(object):
             try:
                 data = self.parse_raw_data(raw_data)
                 pprint(data)
+
             except:
                 print('INVALID DATA: "{}"'.format(raw_data))
                 print('SINKED')
