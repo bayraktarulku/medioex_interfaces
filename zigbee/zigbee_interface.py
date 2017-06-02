@@ -6,7 +6,7 @@ from sqlalchemy import and_
 import re
 
 
-DATA_PATTERN = re.compile('([0-9A-Fa-f]{1,3})\|([CR])\|([0-9,;]+)\|(.*)')
+DATA_PATTERN = re.compile('([0-9A-Fa-f]{1,3})\|([CRN])\|([0-9,;]+)\|(.*)')
 
 
 class ZigbeeService(object):
