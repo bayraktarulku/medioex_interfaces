@@ -28,8 +28,6 @@ class ZigbeeService(object):
     @staticmethod
     def parse_raw_data(data):
         parsed = DATA_PATTERN.match(data)
-        if not parsed:
-            return
         msg_id, dtype, path, message = parsed.groups()
 
         prev_path, next_path = path.split(';')
@@ -113,6 +111,7 @@ class ZigbeeService(object):
             try:
                 data = self.parse_raw_data(raw_data)
                 pprint(data)
+
             except:
                 print('INVALID DATA: "{}"'.format(raw_data))
                 print('SINKED')
